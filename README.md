@@ -62,12 +62,31 @@ developing your own process.
 
 - Add a new toy when the toy form is submitted
 
-  - How I debugged:
+1. Completed 500 Internal Server Error in 147ms (ActiveRecord: 0.0ms | Allocations: 1611)
+   NameError (uninitialized constant ToysController::Toys):
+   app/controllers/toys_controller.rb:10:in `create'
+
+- How I debugged:
+
+1. I corrected the typo Toys to be Toy to match the model from which the instance in created i.e when a new toy is added to the database
 
 - Update the number of likes for a toy
 
+  1.  Toy Load (49.6ms) SELECT "toys".\* FROM "toys" WHERE "toys"."id" = ? LIMIT ? [["id", 1], ["LIMIT", 1]]
+      ↳ app/controllers/toys_controller.rb:15:in `update'
+      Unpermitted parameter: :id
+      Completed 204 No Content in 108ms (ActiveRecord: 51.1ms | Allocations: 3770)
+
   - How I debugged:
+    1. I added a custom function to increment likes of a particular toy based on it's id
 
 - Donate a toy to Goodwill (and delete it from our database)
 
+  1. Started DELETE "/toys/1" for 127.0.0.1 at 2023-06-23 16:02:28 +0300
+
+  ActionController::RoutingError (No route matches [DELETE] "/toys/1"):
+
+  This shows theres no route to delete the toy
+
   - How I debugged:
+    I included :destroy route in my routes
